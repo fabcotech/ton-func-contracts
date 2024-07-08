@@ -1,4 +1,6 @@
-# TON (The Open Network) blockchain - The duck repo
+## TON (The Open Network) blockchain - The duck repo
+
+![state of the workflow](https://github.com/fabcotech/nest-typeorm-boilerplate/actions/workflows/main.yml/badge.svg)
 
 ![The duck](https://sl.combot.org/utyaduck/webp/6xf09f98b3.webp)
 
