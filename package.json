@@ -6,6 +6,7 @@
     "FunC",
     "TON",
     "Telegram Open Network",
+    "Telegram",
     "Typescript"
   ],
   "description": "A set of low and high value TON (Telegram Open Network) FunC smart contracts and test suites.",

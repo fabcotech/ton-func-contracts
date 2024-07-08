@@ -1,4 +1,4 @@
-## TON (The Open Network) blockchain - The duck repo
+## TON (Telegram Open Network) blockchain - The duck repo
 
 ![state of the workflow](https://github.com/fabcotech/nest-typeorm-boilerplate/actions/workflows/main.yml/badge.svg)
 
