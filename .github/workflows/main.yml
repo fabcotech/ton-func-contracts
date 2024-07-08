@@ -1,0 +1,46 @@
+name: 'Build, run and test'
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  test:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node JS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.11
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Build
+        run: npm run build
+
+      - name: Build
+        run: npm run test
+
+  lintandcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node JS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.11
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Prettier check
+        run: npm run prettier:check
+
+      - name: ESLint lint
+        run: npm run lint
