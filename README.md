@@ -9,7 +9,7 @@ A set of low, high value TON blockchain (The Open Network) FunC smart contracts 
 - **Arithmetic** : TON Smart contract that performs basic add/substract/multiply operations on a integer
 - **Fibonacci** : TON Smart contract that stores two integers, and continues the fibonacci sequence everytime it is touched.
 - **Ten thousands transfers** : Two blockchain users exchange TON back and forth, 10.000 times, balance is checked after each transfer.
-- **One thousand token transfer** : Mints a new token with 100B supply, 30B are sent to three blockchain users, they do one thusands small token transfers.
+- **One thousand token transfer** : Mints a new token with 100B supply, 30B are sent to three blockchain users, they do one thousand small token transfers. Balance is checked after each transfer.
 
 ```sh
 yarn
