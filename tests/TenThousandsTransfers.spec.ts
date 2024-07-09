@@ -1,11 +1,8 @@
-import { Blockchain, SandboxContract, TreasuryContract, printTransactionFees } from '@ton/sandbox';
-import { Cell, toNano } from '@ton/core';
+import { Blockchain, SandboxContract, TreasuryContract } from '@ton/sandbox';
 import '@ton/test-utils';
-import { compile } from '@ton/blueprint';
 
 describe('[Ten thousands transfers]', () => {
   let blockchain: Blockchain;
-  let deployer: SandboxContract<TreasuryContract>;
   let user1: null | SandboxContract<TreasuryContract> = null;
   let user2: null | SandboxContract<TreasuryContract> = null;
   const transfers: {
