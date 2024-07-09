@@ -41,7 +41,7 @@ describe('[Fibonacci]', () => {
       const n2 = await contract.getN2();
       expect(n1).toBe(vals[0]);
       expect(n2).toBe(vals[1]);
-      await contract.sendTouch(user1.getSender(), toNano('0.05'));
+      await contract.sendTouch((user1 as SandboxContract<TreasuryContract>).getSender(), toNano('0.05'));
     }
   });
 });
