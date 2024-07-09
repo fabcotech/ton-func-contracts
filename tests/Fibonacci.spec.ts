@@ -20,12 +20,12 @@ describe('[Fibonacci]', () => {
     deployer = await blockchain.treasury('deployer');
   });
 
-  it('[Fibonacci] deploy', async () => {
+  it('[Fibonacci] deploys', async () => {
     const deployResult = await contract.sendDeploy(deployer.getSender(), toNano('0.05'));
     expect(typeof deployResult.transactions[0].now).toBe('number');
   });
 
-  it('[Fibonacci] trigger fibonacci sequence', async () => {
+  it('[Fibonacci] triggers fibonacci sequence', async () => {
     for (const vals of [
       [1, 0],
       [1, 1],

@@ -50,9 +50,9 @@ describe('[Ten thousands transfers]', () => {
       const balanceReceiverAfter = await transfer.receiver.getBalance();
       expect(expectedBalances.includes(balanceReceiverAfter)).toBe(true);
       i += 1;
-      if (i === 100 || i === 1000 || i % 1000 === 0) {
+      if (process.argv.includes('--logs') && (i === 100 || i === 1000 || i % 1000 === 0)) {
         console.log(
-          `ok transfer no${i} ${transfer.sender.address} -> ${transfer.receiver.address} (${transfer.value})`,
+          `[Ten thousands transfers] ok transfer no${i} ${transfer.sender.address} -> ${transfer.receiver.address} (${transfer.value})`,
         );
       }
     }
