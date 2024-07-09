@@ -9,21 +9,22 @@ A set of low, high value TON blockchain (The Open Network) FunC smart contracts 
 - **Arithmetic** : TON Smart contract that performs basic add/substract/multiply operations on a integer
 - **Fibonacci** : TON Smart contract that stores two integers, and continues the fibonacci sequence everytime it is touched.
 - **Ten thousands transfers** : Two blockchain users exchange TON back and forth, 10.000 times, balance is checked after each transfer.
+- **One thousand token transfer** : Mints a new token with 100B supply, 30B are sent to three blockchain users, they do one thusands small token transfers.
 
 ```sh
-npm i
-npm run build
-npm run test
+yarn
+yarn build
+yarn test
 
 # Only test arithmetic
-npm run test tests/Arithmetic.spec.ts
+yarn test tests/Arithmetic.spec.ts
 
 # Only test fibonacci
-npm run test tests/Fibonacci.spec.ts
+yarn test tests/Fibonacci.spec.ts
 
 # Only test 10.000 transfers
-npm run test tests/TenThousandsTransfers.spec.ts
+yarn test tests/TenThousandsTransfers.spec.ts
 
 # Only test 1.000 token transfers
-npm run test tests/OneThousandTokenTransfers.spec.ts
+yarn test tests/OneThousandTokenTransfers.spec.ts
 ```
