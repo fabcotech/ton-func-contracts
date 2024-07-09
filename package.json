@@ -5,11 +5,11 @@
   "keywords": [
     "FunC",
     "TON",
-    "Telegram Open Network",
+    "The Open Network",
     "Telegram",
     "Typescript"
   ],
-  "description": "A set of low and high value TON (Telegram Open Network) FunC smart contracts and test suites.",
+  "description": "A set of low and high value TON (The Open Network) FunC smart contracts and test suites.",
   "scripts": {
     "start": "blueprint run",
     "build": "blueprint build",

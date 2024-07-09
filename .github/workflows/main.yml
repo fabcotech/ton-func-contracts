@@ -18,10 +18,10 @@ jobs:
           node-version: 20.11
 
       - name: Install dependencies
-        run: npm i
+        run: yarn
 
       - name: Test
-        run: npm run test
+        run: yarn test
 
   lintandcheck:
     runs-on: ubuntu-latest
@@ -35,10 +35,10 @@ jobs:
           node-version: 20.11
 
       - name: Install dependencies
-        run: npm i
+        run: yarn
 
       - name: Prettier check
-        run: npm run prettier:check
+        run: yarn prettier:check
 
       - name: ESLint lint
-        run: npm run lint
+        run: yarn lint
