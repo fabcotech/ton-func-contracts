@@ -8,6 +8,7 @@ A set of low, high value TON blockchain (Telegram Open Network) FunC smart contr
 
 - **Arithmetic** : TON Smart contract that performs basic add/substract/multiply operations on a integer
 - **Fibonacci** : TON Smart contract that stores two integers, and continues the fibonacci sequence everytime it is touched.
+- **Ten thousands transfers** : Two blockchain users exchange TON back and forth, 10.000 times, balance is checked after each transfer.
 
 ```sh
 npm i

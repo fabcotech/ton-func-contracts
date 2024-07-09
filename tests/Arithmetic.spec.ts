@@ -16,7 +16,7 @@ describe('[Arithmetic]', () => {
   let blockchain: Blockchain;
   let deployer: SandboxContract<TreasuryContract>;
   let arithmeticContract: SandboxContract<Arithmetic>;
-  let user1: any = null;
+  let user1: null | SandboxContract<TreasuryContract> = null;
   let provider: null | ContractProvider = null;
 
   beforeAll(async () => {

@@ -10,7 +10,7 @@ describe('[Fibonacci]', () => {
   let blockchain: Blockchain;
   let deployer: SandboxContract<TreasuryContract>;
   let contract: SandboxContract<Fibonacci>;
-  let user1: any = null;
+  let user1: null | SandboxContract<TreasuryContract> = null;
 
   beforeAll(async () => {
     code = await compile('Fibonacci');
