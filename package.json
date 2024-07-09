@@ -24,7 +24,7 @@
     "@ton/sandbox": "^0.19.0",
     "@ton/test-utils": "^0.4.2",
     "@ton/ton": "^13.11.1",
-    "@ton/core": "^0.56.3",
+    "@ton/core": "^0.56.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.12",
     "@typescript-eslint/eslint-plugin": "^7.11.0",

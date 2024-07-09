@@ -1,3 +1,4 @@
+import '@ton/core';
 import { Blockchain, SandboxContract, TreasuryContract } from '@ton/sandbox';
 import '@ton/test-utils';
 
