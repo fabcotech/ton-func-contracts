@@ -1,26 +1,9 @@
-import { Blockchain, SandboxContract, TreasuryContract, internal } from '@ton/sandbox';
-import { Cell, toNano, beginCell, Address } from '@ton/core';
+import { Blockchain, SandboxContract, TreasuryContract } from '@ton/sandbox';
+import { Cell, toNano, Address } from '@ton/core';
 import { JettonWallet } from '../wrappers/JettonWallet';
 import { JettonMinter, jettonContentToCell } from '../wrappers/JettonMinter';
 import '@ton/test-utils';
 import { compile } from '@ton/blueprint';
-
-/*
-   These tests check compliance with the TEP-74 and TEP-89,
-   but also checks some implementation details.
-   If you want to keep only TEP-74 and TEP-89 compliance tests,
-   you need to remove/modify the following tests:
-     mint tests (since minting is not covered by standard)
-     exit_codes
-     prove pathway
-*/
-
-//jetton params
-
-const fwd_fee = 1804014n,
-  gas_consumption = 15000000n,
-  min_tons_for_storage = 10000000n;
-//let fwd_fee = 1804014n, gas_consumption = 14000000n, min_tons_for_storage = 10000000n;
 
 describe('[One thousand token transfers]', () => {
   let jwallet_code = new Cell();
@@ -96,8 +79,7 @@ describe('[One thousand token transfers]', () => {
   it('[One thousand token transfers] mints initial 100B supply', async () => {
     const initialTotalSupply = await jettonMinter.getTotalSupply();
     expect(initialTotalSupply).toBe(BigInt('0'));
-    const user1JettonWallet = await userWallet(user1.address);
-    const mintResult = await jettonMinter.sendMint(
+    await jettonMinter.sendMint(
       user1.getSender(),
       user1.address,
       BigInt('100000000000'),
@@ -135,7 +117,7 @@ describe('[One thousand token transfers]', () => {
     expect(await user3JettonWallet.getJettonBalance()).toEqual(BigInt('33000000000'));
   });
 
-  it('[One thousand token transfers] do the 10.000 transfers', async () => {
+  it('[One thousand token transfers] do the 1.000 transfers', async () => {
     let i = 1;
     for (const transfer of transfers) {
       const senderJettonWallet = await userWallet(transfer.sender.address);

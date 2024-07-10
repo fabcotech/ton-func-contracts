@@ -8,8 +8,6 @@ import {
   Sender,
   SendMode,
   toNano,
-  internal as internal_relaxed,
-  storeMessageRelaxed,
 } from '@ton/core';
 
 import { Op } from './JettonConstants';

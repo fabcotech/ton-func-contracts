@@ -10,9 +10,8 @@ import {
   toNano,
 } from '@ton/core';
 
-export type JettonWalletConfig = {};
 
-export function jettonWalletConfigToCell(config: JettonWalletConfig): Cell {
+export function jettonWalletConfigToCell(): Cell {
   return beginCell().endCell();
 }
 
@@ -26,8 +25,8 @@ export class JettonWallet implements Contract {
     return new JettonWallet(address);
   }
 
-  static createFromConfig(config: JettonWalletConfig, code: Cell, workchain = 0) {
-    const data = jettonWalletConfigToCell(config);
+  static createFromConfig(config: object, code: Cell, workchain = 0) {
+    const data = jettonWalletConfigToCell();
     const init = { code, data };
     return new JettonWallet(contractAddress(workchain, init), init);
   }
