@@ -5,10 +5,6 @@ import { compile } from '@ton/blueprint';
 
 import { PingPong } from '../wrappers/PingPong';
 
-export const Opcodes = {
-  toggle: 0x7e8764ef,
-};
-
 describe('[PingPong]', () => {
   let code: Cell;
   let blockchain: Blockchain;
