@@ -39,6 +39,7 @@ describe('[Fibonacci]', () => {
       [13, 8],
       [21, 13],
       [34, 21],
+      [55, 34],
     ]) {
       const n1 = await contract.getN1();
       const n2 = await contract.getN2();
