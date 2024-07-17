@@ -1,4 +1,13 @@
-import { Address, beginCell, Cell, Contract, contractAddress, ContractProvider, Sender, SendMode } from '@ton/core';
+import {
+  Address,
+  beginCell,
+  Cell,
+  Contract,
+  contractAddress,
+  ContractProvider,
+  Sender,
+  SendMode,
+} from '@ton/core';
 
 export type ArithmeticConfig = {
   counter: number;
@@ -17,7 +26,7 @@ export const Opcodes = {
 export class Arithmetic implements Contract {
   constructor(
     readonly address: Address,
-    readonly init?: { code: Cell; data: Cell },
+    readonly init?: { code: Cell; data: Cell }
   ) {}
 
   static createFromAddress(address: Address) {
@@ -47,7 +56,7 @@ export class Arithmetic implements Contract {
       increaseBy: number;
       value: bigint;
       queryID?: number;
-    },
+    }
   ) {
     await provider.internal(via, {
       value: opts.value,
@@ -68,7 +77,7 @@ export class Arithmetic implements Contract {
       value: bigint;
       decreaseBy: number;
       queryID?: number;
-    },
+    }
   ) {
     await provider.internal(via, {
       value: opts.value,
@@ -87,7 +96,7 @@ export class Arithmetic implements Contract {
       value: bigint;
       multiplyBy: number;
       queryID?: number;
-    },
+    }
   ) {
     await provider.internal(via, {
       value: opts.value,

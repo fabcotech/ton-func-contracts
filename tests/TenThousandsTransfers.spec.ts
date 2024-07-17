@@ -46,13 +46,20 @@ describe('[Ten thousands transfers]', () => {
         balance is not always exact, there may be a +1 or
         -1 rounding/else error
       */
-      const expectedBalances = [expectedBalance - 1n, expectedBalance, expectedBalance + 1n];
+      const expectedBalances = [
+        expectedBalance - 1n,
+        expectedBalance,
+        expectedBalance + 1n,
+      ];
       const balanceReceiverAfter = await transfer.receiver.getBalance();
       expect(expectedBalances.includes(balanceReceiverAfter)).toBe(true);
       i += 1;
-      if (process.argv.includes('--logs') && (i === 100 || i === 1000 || i % 1000 === 0)) {
+      if (
+        process.argv.includes('--logs') &&
+        (i === 100 || i === 1000 || i % 1000 === 0)
+      ) {
         console.log(
-          `[Ten thousands transfers] ok transfer no${i} ${transfer.sender.address} -> ${transfer.receiver.address} (${transfer.value})`,
+          `[Ten thousands transfers] ok transfer no${i} ${transfer.sender.address} -> ${transfer.receiver.address} (${transfer.value})`
         );
       }
     }

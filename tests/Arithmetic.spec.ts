@@ -23,14 +23,21 @@ describe('[Arithmetic]', () => {
     code = await compile('Arithmetic');
     blockchain = await Blockchain.create();
     user1 = await blockchain.treasury('user1');
-    arithmeticContract = blockchain.openContract(Arithmetic.createFromConfig({ counter: 0 }, code));
+    arithmeticContract = blockchain.openContract(
+      Arithmetic.createFromConfig({ counter: 0 }, code)
+    );
     provider = blockchain.provider(arithmeticContract.address);
     deployer = await blockchain.treasury('deployer');
-    (provider as any).blockchain.openContract(Arithmetic.createFromConfig({ counter: 0 }, code));
+    (provider as any).blockchain.openContract(
+      Arithmetic.createFromConfig({ counter: 0 }, code)
+    );
   });
 
   it('[Arithmetic] deploys', async () => {
-    const deployResult = await arithmeticContract.sendDeploy(deployer.getSender(), toNano('0.05'));
+    const deployResult = await arithmeticContract.sendDeploy(
+      deployer.getSender(),
+      toNano('0.05')
+    );
     expect(deployResult.transactions).toHaveTransaction({
       from: deployer.address,
       to: arithmeticContract.address,
@@ -49,7 +56,7 @@ describe('[Arithmetic]', () => {
       {
         increaseBy: 12,
         value: toNano('0.05'),
-      },
+      }
     );
     expect(increaseResult.transactions).toHaveTransaction({
       from: (user1 as SandboxContract<TreasuryContract>).address,
@@ -60,10 +67,13 @@ describe('[Arithmetic]', () => {
   });
 
   it('[Arithmetic] decreases', async () => {
-    await arithmeticContract.sendDecrease((user1 as SandboxContract<TreasuryContract>).getSender(), {
-      decreaseBy: 1,
-      value: toNano('0.05'),
-    });
+    await arithmeticContract.sendDecrease(
+      (user1 as SandboxContract<TreasuryContract>).getSender(),
+      {
+        decreaseBy: 1,
+        value: toNano('0.05'),
+      }
+    );
     expect(await arithmeticContract.getCounter()).toBe(11);
   });
 
@@ -76,10 +86,13 @@ describe('[Arithmetic]', () => {
       sendMode: SendMode.PAY_GAS_SEPARATELY,
       body: beginCell().storeUint(Opcodes.multiply, 32).storeUint(0, 64).storeUint(2, 32).endCell(),
     }); */
-    await arithmeticContract.sendMultiply((user1 as SandboxContract<TreasuryContract>).getSender(), {
-      multiplyBy: 2,
-      value: toNano('0.05'),
-    });
+    await arithmeticContract.sendMultiply(
+      (user1 as SandboxContract<TreasuryContract>).getSender(),
+      {
+        multiplyBy: 2,
+        value: toNano('0.05'),
+      }
+    );
     expect(await arithmeticContract.getCounter()).toBe(22);
   });
 });

@@ -1,4 +1,13 @@
-import { Address, beginCell, Cell, Contract, contractAddress, ContractProvider, Sender, SendMode } from '@ton/core';
+import {
+  Address,
+  beginCell,
+  Cell,
+  Contract,
+  contractAddress,
+  ContractProvider,
+  Sender,
+  SendMode,
+} from '@ton/core';
 
 export function counterConfigToCell(): Cell {
   return beginCell().storeUint(0, 32).storeUint(0, 32).endCell();
@@ -7,7 +16,7 @@ export function counterConfigToCell(): Cell {
 export class Fibonacci implements Contract {
   constructor(
     readonly address: Address,
-    readonly init?: { code: Cell; data: Cell },
+    readonly init?: { code: Cell; data: Cell }
   ) {}
 
   static createFromAddress(address: Address) {

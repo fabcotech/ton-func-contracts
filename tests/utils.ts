@@ -123,20 +123,32 @@ const testPartial = (cmp: any, match: any) => {
   }
   return true;
 };
-export const testJettonBurnNotification = (body: Cell, match: Partial<JettonBurnNotification>) => {
+export const testJettonBurnNotification = (
+  body: Cell,
+  match: Partial<JettonBurnNotification>
+) => {
   const res = parseBurnNotification(body);
   return testPartial(res, match);
 };
 
-export const testJettonTransfer = (body: Cell, match: Partial<JettonTransfer>) => {
+export const testJettonTransfer = (
+  body: Cell,
+  match: Partial<JettonTransfer>
+) => {
   const res = parseTransfer(body);
   return testPartial(res, match);
 };
-export const testJettonInternalTransfer = (body: Cell, match: Partial<InternalTransfer>) => {
+export const testJettonInternalTransfer = (
+  body: Cell,
+  match: Partial<InternalTransfer>
+) => {
   const res = parseInternalTransfer(body);
   return testPartial(res, match);
 };
-export const testJettonNotification = (body: Cell, match: Partial<JettonTransferNotification>) => {
+export const testJettonNotification = (
+  body: Cell,
+  match: Partial<JettonTransferNotification>
+) => {
   const res = parseTransferNotification(body);
   return testPartial(res, match);
 };

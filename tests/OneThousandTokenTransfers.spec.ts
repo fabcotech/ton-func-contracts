@@ -28,7 +28,10 @@ describe('[One thousand token transfers]', () => {
     user1 = await blockchain.treasury('user1');
     user2 = await blockchain.treasury('user2');
     user3 = await blockchain.treasury('user3');
-    defaultContent = jettonContentToCell({ type: 1, uri: 'https://testjetton.org/content.json' });
+    defaultContent = jettonContentToCell({
+      type: 1,
+      uri: 'https://testjetton.org/content.json',
+    });
     jettonMinter = blockchain.openContract(
       JettonMinter.createFromConfig(
         {
@@ -36,11 +39,15 @@ describe('[One thousand token transfers]', () => {
           content: defaultContent,
           wallet_code: jwallet_code,
         },
-        minter_code,
-      ),
+        minter_code
+      )
     );
     userWallet = async (address: Address) =>
-      blockchain.openContract(JettonWallet.createFromAddress(await jettonMinter.getWalletAddress(address)));
+      blockchain.openContract(
+        JettonWallet.createFromAddress(
+          await jettonMinter.getWalletAddress(address)
+        )
+      );
 
     for (let i = 0; i < 1000; i += 1) {
       if (Math.random() < 0.33) {
@@ -67,7 +74,10 @@ describe('[One thousand token transfers]', () => {
 
   // implementation detail
   it('[One thousand token transfers] deploys', async () => {
-    const deployResult = await jettonMinter.sendDeploy(user1.getSender(), toNano('100'));
+    const deployResult = await jettonMinter.sendDeploy(
+      user1.getSender(),
+      toNano('100')
+    );
 
     expect(deployResult.transactions).toHaveTransaction({
       from: user1.address,
@@ -84,7 +94,7 @@ describe('[One thousand token transfers]', () => {
       user1.address,
       BigInt('100000000000'),
       toNano('0.05'),
-      toNano('1'),
+      toNano('1')
     );
     expect(await jettonMinter.getTotalSupply()).toBe(BigInt('100000000000'));
   });
@@ -101,7 +111,7 @@ describe('[One thousand token transfers]', () => {
       user1.address,
       null,
       toNano('0.05'),
-      null,
+      null
     );
     await user1JettonWallet.sendTransfer(
       user1.getSender(),
@@ -111,10 +121,14 @@ describe('[One thousand token transfers]', () => {
       user1.address,
       null,
       toNano('0.05'),
-      null,
+      null
     );
-    expect(await user2JettonWallet.getJettonBalance()).toEqual(BigInt('33000000000'));
-    expect(await user3JettonWallet.getJettonBalance()).toEqual(BigInt('33000000000'));
+    expect(await user2JettonWallet.getJettonBalance()).toEqual(
+      BigInt('33000000000')
+    );
+    expect(await user3JettonWallet.getJettonBalance()).toEqual(
+      BigInt('33000000000')
+    );
   });
 
   it('[One thousand token transfers] do the 1.000 transfers', async () => {
@@ -123,7 +137,8 @@ describe('[One thousand token transfers]', () => {
       const senderJettonWallet = await userWallet(transfer.sender.address);
       const receiverJettonWallet = await userWallet(transfer.receiver.address);
 
-      const balanceReceiverBefore = await receiverJettonWallet.getJettonBalance();
+      const balanceReceiverBefore =
+        await receiverJettonWallet.getJettonBalance();
 
       await senderJettonWallet.sendTransfer(
         transfer.sender.getSender(),
@@ -133,13 +148,15 @@ describe('[One thousand token transfers]', () => {
         transfer.sender.address,
         null,
         toNano('0.05'),
-        null,
+        null
       );
-      expect(await await receiverJettonWallet.getJettonBalance()).toBe(balanceReceiverBefore + transfer.value);
+      expect(await await receiverJettonWallet.getJettonBalance()).toBe(
+        balanceReceiverBefore + transfer.value
+      );
       i += 1;
       if (i % 100 === 0 && process.argv.includes('--logs')) {
         console.log(
-          `[One thousand token transfers] ok transfer no${i} ${transfer.sender.address} -> ${transfer.receiver.address} (${transfer.value})`,
+          `[One thousand token transfers] ok transfer no${i} ${transfer.sender.address} -> ${transfer.receiver.address} (${transfer.value})`
         );
       }
     }

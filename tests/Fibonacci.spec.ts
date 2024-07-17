@@ -21,7 +21,10 @@ describe('[Fibonacci]', () => {
   });
 
   it('[Fibonacci] deploys', async () => {
-    const deployResult = await contract.sendDeploy(deployer.getSender(), toNano('0.05'));
+    const deployResult = await contract.sendDeploy(
+      deployer.getSender(),
+      toNano('0.05')
+    );
     expect(typeof deployResult.transactions[0].now).toBe('number');
   });
 
@@ -41,7 +44,10 @@ describe('[Fibonacci]', () => {
       const n2 = await contract.getN2();
       expect(n1).toBe(vals[0]);
       expect(n2).toBe(vals[1]);
-      await contract.sendTouch((user1 as SandboxContract<TreasuryContract>).getSender(), toNano('0.05'));
+      await contract.sendTouch(
+        (user1 as SandboxContract<TreasuryContract>).getSender(),
+        toNano('0.05')
+      );
     }
   });
 });
