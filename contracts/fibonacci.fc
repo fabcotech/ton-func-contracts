@@ -3,60 +3,55 @@
 global int ctx_n1;
 global int ctx_n2;
 
-;; save_data stores storage variables as a cell into persistent storage
+() load_data() impure {
+  var ds = get_data().begin_parse();
+  ctx_n1 = ds~load_uint(32);
+  ctx_n2 = ds~load_uint(32);
+  ds.end_parse();
+}
+
 () save_data() impure {
-    set_data(
-        begin_cell()
-            .store_uint(ctx_n1, 32)
-            .store_uint(ctx_n2, 32)
-            .end_cell()
-    );
+  set_data(
+    begin_cell()
+      .store_uint(ctx_n1, 32)
+      .store_uint(ctx_n2, 32)
+      .end_cell()
+  );
 }
 
 () recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
-    ;;throw_if(35, in_msg_body.slice_bits() < 32);
-
-    slice cs = in_msg_full.begin_parse();
-    int flags = cs~load_uint(4);
-    if (flags & 1) { ;; ignore all bounced messages
-        return ();
-    }
-
-    var ds = get_data().begin_parse();
-    ctx_n1 = ds~load_uint(32);
-    ctx_n2 = ds~load_uint(32);
-    ds.end_parse();
-
-    if (ctx_n2 == 0) {
-        if (ctx_n1 == 0) {
-            ctx_n1 = 1;
-            ctx_n2 = 0;
-            set_data(begin_cell().store_uint(ctx_n1, 32).store_uint(ctx_n2, 32).end_cell());
-            save_data();
-            return ();
-        }
-    }
-    int sum = ctx_n1 + ctx_n2;
-    int n1 = ctx_n1;
-    ctx_n1 = sum;
-    ctx_n2 = n1;
-    set_data(begin_cell().store_uint(ctx_n1, 32).store_uint(ctx_n2, 32).end_cell());
-    save_data();
+  slice cs = in_msg_full.begin_parse();
+  int flags = cs~load_uint(4);
+  if (flags & 1) {
     return ();
+  }
+
+  load_data();
+
+  if (ctx_n2 == 0) {
+    if (ctx_n1 == 0) {
+      ctx_n1 = 1;
+      ctx_n2 = 0;
+      set_data(begin_cell().store_uint(ctx_n1, 32).store_uint(ctx_n2, 32).end_cell());
+      save_data();
+      return ();
+    }
+  }
+  int sum = ctx_n1 + ctx_n2;
+  int n1 = ctx_n1;
+  ctx_n1 = sum;
+  ctx_n2 = n1;
+  set_data(begin_cell().store_uint(ctx_n1, 32).store_uint(ctx_n2, 32).end_cell());
+  save_data();
+  return ();
 }
 
 int get_n1() method_id {
-    slice ds = get_data().begin_parse();
-    ctx_n1 = ds~load_uint(32);
-    ctx_n2 = ds~load_uint(32);
-    ds.end_parse();
-    return ctx_n1;
+ load_data();
+  return ctx_n1;
 }
 
 int get_n2() method_id {
-    slice ds = get_data().begin_parse();
-    ctx_n1 = ds~load_uint(32);
-    ctx_n2 = ds~load_uint(32);
-    ds.end_parse();
-    return ctx_n2;
+  load_data();
+  return ctx_n2;
 }
