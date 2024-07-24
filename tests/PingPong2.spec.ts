@@ -5,6 +5,11 @@ import { compile } from '@ton/blueprint';
 
 import { PingPong2 } from '../wrappers/PingPong2';
 
+const decodeString = (strBuffer: Cell) => {
+  const strOk = strBuffer.toString().replace('x{', '').replace('}', '');
+  return Buffer.from(strOk, 'hex').toString('utf8');
+};
+
 describe('[PingPong2]', () => {
   let code: Cell;
   let blockchain: Blockchain;
@@ -43,21 +48,14 @@ describe('[PingPong2]', () => {
   });
 
   it('[PingPong2] toggle', async () => {
-    const str = await pingPong2Contract.getStr();
-    const strOk = (str as any).toString().replace('x{', '').replace('}', '');
-    const decoded = Buffer.from(strOk, 'hex').toString('utf8');
-    expect(decoded).toBe('ping');
-
+    expect(decodeString(await pingPong2Contract.getStr())).toBe('ping');
     await pingPong2Contract.sendToggle(
       (user1 as SandboxContract<TreasuryContract>).getSender(),
       {
         value: toNano('0.05'),
       }
     );
-    const str2 = await pingPong2Contract.getStr();
-    const str2Ok = (str2 as any).toString().replace('x{', '').replace('}', '');
-    const decoded2 = Buffer.from(str2Ok, 'hex').toString('utf8');
-    expect(decoded2).toBe('pong');
+    expect(decodeString(await pingPong2Contract.getStr())).toBe('pong');
 
     await pingPong2Contract.sendToggle(
       (user2 as SandboxContract<TreasuryContract>).getSender(),
@@ -65,10 +63,7 @@ describe('[PingPong2]', () => {
         value: toNano('0.05'),
       }
     );
-    const str3 = await pingPong2Contract.getStr();
-    const str3Ok = (str3 as any).toString().replace('x{', '').replace('}', '');
-    const decoded3 = Buffer.from(str3Ok, 'hex').toString('utf8');
-    expect(decoded3).toBe('ping');
+    expect(decodeString(await pingPong2Contract.getStr())).toBe('ping');
 
     // user2 cannot toggle ping->pong
     await pingPong2Contract.sendToggle(
@@ -77,9 +72,6 @@ describe('[PingPong2]', () => {
         value: toNano('0.05'),
       }
     );
-    const str4 = await pingPong2Contract.getStr();
-    const str4Ok = (str4 as any).toString().replace('x{', '').replace('}', '');
-    const decoded4 = Buffer.from(str4Ok, 'hex').toString('utf8');
-    expect(decoded4).toBe('ping');
+    expect(decodeString(await pingPong2Contract.getStr())).toBe('ping');
   });
 });
