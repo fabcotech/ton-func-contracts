@@ -17,7 +17,7 @@ and test suites. New code coming in regularly.
 - **One thousand token transfer** : Mints a new token with 100B supply, 30B are
   sent to three blockchain users, they do one thousand small token transfers.
   Balance is checked after each transfer.
-- **Ping pong** : A contract stores a string (as `func slice`), each time it is
+- **Ping pong** : A contract stores a string (as `slice`), each time it is
   called, `"ping"` is toggled to `"pong"` and vice versa. _Storing a string as
   slice on chain_, _Comparing two slices one with another_
 - **Ping pong (2)** : Same as Ping pong but only one address is authorized to
