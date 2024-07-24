@@ -1,16 +1,17 @@
 #include "imports/stdlib.fc";
 
-int slice_hash(slice s) asm "HASHSU";
 int equal_slices(slice a, slice b) asm "SDEQ";
 
 ;; storage variables
 global cell ctx_str;
 global cell ctx_address1;
+global cell ctx_address2;
 
 () load_data() impure {
   var ds = get_data().begin_parse();
   ctx_str = ds~load_ref();
   ctx_address1 = ds~load_ref();
+  ctx_address2 = ds~load_ref();
   ds.end_parse();
 }
 
@@ -19,6 +20,7 @@ global cell ctx_address1;
     begin_cell()
       .store_ref(ctx_str)
       .store_ref(ctx_address1)
+      .store_ref(ctx_address2)
       .end_cell()
   );
 }
@@ -35,25 +37,19 @@ global cell ctx_address1;
   slice current = ctx_str.begin_parse();
   slice ping = begin_cell().store_slice("ping").end_cell().begin_parse();
 
-  ~strdump("sender_address");
-  ~dump(sender_address);
-  ~strdump("ctx_address1");
-  ~dump(ctx_address1.begin_parse());
-  if (equal_slices(sender_address, ctx_address1.begin_parse()) == -1) {
-    ~strdump("sender_address and ctx_address1 are equal");
-  } else {
-    ~strdump("sender_address and ctx_address1 are not equal");
-  }
-
   if (equal_slices(current,ping) == -1) {
-    cell c = begin_cell().store_slice("pong").end_cell();
-    ctx_str = c;
-    save_data();
+    if (equal_slices(sender_address, ctx_address1.begin_parse()) == -1) {
+      cell c = begin_cell().store_slice("pong").end_cell();
+      ctx_str = c;
+      save_data();
+    }
     return ();
   } else  {
-    cell c = begin_cell().store_slice("ping").end_cell();
-    ctx_str = c;
-    save_data();
+    if (equal_slices(sender_address, ctx_address2.begin_parse()) == -1) {
+      cell c = begin_cell().store_slice("ping").end_cell();
+      ctx_str = c;
+      save_data();
+    }
     return ();
   }
 }

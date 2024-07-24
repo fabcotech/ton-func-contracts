@@ -8,7 +8,8 @@ A set of low, high value TON blockchain (The Open Network) FunC smart contracts
 and test suites. New code coming in regularly.
 
 - **Arithmetic** : TON Smart contract that performs basic add/substract/multiply
-  operations on a integer
+  operations on a integer. _Storing number on chain_, _performing operations on
+  a number_
 - **Fibonacci** : TON Smart contract that stores two integers, and continues the
   fibonacci sequence everytime it is touched.
 - **Ten thousands transfers** : Two blockchain users exchange TON back and
@@ -17,7 +18,12 @@ and test suites. New code coming in regularly.
   sent to three blockchain users, they do one thousand small token transfers.
   Balance is checked after each transfer.
 - **Ping pong** : A contract stores a string (as `func slice`), each time it is
-  called, `"ping"` is toggled to `"pong"` and vice versa.
+  called, `"ping"` is toggled to `"pong"` and vice versa. _Storing a string as
+  slice on chain_, _Comparing two slices one with another_
+- **Ping pong (2)** : Same as Ping pong but only one address is authorized to
+  toggle ping->pong, and only one other address is authorized to toggle
+  pong->ping. _Checking sender address_, _Comparing sender address with another
+  arbitrary address_
 
 ```sh
 yarn
@@ -38,4 +44,7 @@ yarn test tests/OneThousandTokenTransfers.spec.ts
 
 # Only test ping pong
 yarn test tests/PingPong.spec.ts
+
+# Only test ping pong 2
+yarn test tests/PingPong2.spec.ts
 ```

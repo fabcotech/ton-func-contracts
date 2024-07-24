@@ -14,7 +14,16 @@ export function pingPong2ConfigToCell(): Cell {
     .storeRef(beginCell().storeStringTail('ping').endCell())
     .storeRef(
       beginCell()
-        .storeStringTail('EQCGetaGEWP4PhqPSV71o4NaU3rcw5yAG7kh7s1VdtGGynTA')
+        .storeAddress(
+          Address.parse('EQCGetaGEWP4PhqPSV71o4NaU3rcw5yAG7kh7s1VdtGGynTA')
+        )
+        .endCell()
+    )
+    .storeRef(
+      beginCell()
+        .storeAddress(
+          Address.parse('EQBOo7szgjcz5rYICfwEpHALKKP8QDXwRqKVY7w5axLDcEfY')
+        )
         .endCell()
     )
     .endCell();
