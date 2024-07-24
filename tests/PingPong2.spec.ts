@@ -17,6 +17,7 @@ describe('[PingPong2]', () => {
     code = await compile('PingPong2');
     blockchain = await Blockchain.create();
     user1 = await blockchain.treasury('user1');
+    console.log(user1.address);
     pingPong2Contract = blockchain.openContract(
       PingPong2.createFromConfig({}, code)
     );

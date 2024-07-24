@@ -10,8 +10,14 @@ import {
 } from '@ton/core';
 
 export function pingPong2ConfigToCell(): Cell {
-  const forwardPayload = beginCell().storeStringTail('ping').endCell();
-  return beginCell().storeRef(forwardPayload).endCell();
+  return beginCell()
+    .storeRef(beginCell().storeStringTail('ping').endCell())
+    .storeRef(
+      beginCell()
+        .storeStringTail('EQCGetaGEWP4PhqPSV71o4NaU3rcw5yAG7kh7s1VdtGGynTA')
+        .endCell()
+    )
+    .endCell();
 }
 
 export class PingPong2 implements Contract {
