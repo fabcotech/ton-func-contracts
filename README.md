@@ -24,6 +24,8 @@ and test suites. New code coming in regularly.
   toggle ping->pong, and only one other address is authorized to toggle
   pong->ping. _Checking sender address_, _Comparing sender address with another
   arbitrary address_
+- **Bank** : A simple contract can receive coins, and store them into a cell.
+  _receive TON_, _store TON in a smart contract_
 
 ```sh
 yarn
@@ -47,4 +49,7 @@ yarn test tests/PingPong.spec.ts
 
 # Only test ping pong 2
 yarn test tests/PingPong2.spec.ts
+
+# Only test bank
+yarn test tests/Bank.spec.ts
 ```

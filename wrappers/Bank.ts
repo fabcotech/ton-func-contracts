@@ -10,12 +10,10 @@ import {
   toNano,
 } from '@ton/core';
 
-export type BankConfig = {
-  balance: number;
-};
-
-export function bankConfigToCell(config: BankConfig): Cell {
-  return beginCell().storeUint(config.balance, 32).endCell();
+export function bankConfigToCell(): Cell {
+  return beginCell()
+    .storeRef(beginCell().storeCoins(toNano('0')).endCell())
+    .endCell();
 }
 
 export class Bank implements Contract {
@@ -28,8 +26,8 @@ export class Bank implements Contract {
     return new Bank(address);
   }
 
-  static createFromConfig(config: BankConfig, code: Cell, workchain = 0) {
-    const data = bankConfigToCell(config);
+  static createFromConfig(Cell, workchain = 0) {
+    const data = bankConfigToCell();
     const init = { code, data };
     return new Bank(contractAddress(workchain, init), init);
   }
@@ -62,11 +60,6 @@ export class Bank implements Contract {
 
   async getBal(provider: ContractProvider) {
     const result = await provider.get('get_bal', []);
-    return result.stack.readNumber();
-  }
-
-  async getBalance(provider: ContractProvider) {
-    const result = await provider.get('get_balance', []);
-    return result.stack.readNumber();
+    return result.stack.readCell().beginParse().preloadCoins();
   }
 }
