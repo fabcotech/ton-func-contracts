@@ -26,7 +26,7 @@ export class Bank implements Contract {
     return new Bank(address);
   }
 
-  static createFromConfig(Cell, workchain = 0) {
+  static createFromConfig(code: Cell, workchain = 0) {
     const data = bankConfigToCell();
     const init = { code, data };
     return new Bank(contractAddress(workchain, init), init);
