@@ -47,14 +47,13 @@ export class Bank implements Contract {
     via: Sender,
     opts: {
       value: bigint;
-      coins: bigint;
     }
   ) {
     await provider.internal(via, {
       value: opts.value,
       //debug: true,
       sendMode: SendMode.PAY_GAS_SEPARATELY,
-      body: beginCell().storeCoins(opts.coins).endCell(),
+      body: beginCell().endCell(),
     });
   }
 

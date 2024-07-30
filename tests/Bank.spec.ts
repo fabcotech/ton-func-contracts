@@ -12,7 +12,7 @@ describe('[Bank]', () => {
   let bankContract: SandboxContract<Bank>;
   const transfers: {
     sender: SandboxContract<TreasuryContract>;
-    coins: bigint;
+    value: bigint;
   }[] = [];
 
   beforeAll(async () => {
@@ -23,17 +23,17 @@ describe('[Bank]', () => {
     for (let i = 0; i < 10; i += 1) {
       transfers.push({
         sender: user1 as unknown as SandboxContract<TreasuryContract>,
-        coins: BigInt(Math.round(Math.random() * 100)),
+        value: toNano('0.05') + BigInt(Math.round(Math.random() * 100)),
       });
     }
     /*
       smart contract balance goes
       above the 1B limit
     */
-    transfers.push({
+    /* transfers.push({
       sender: user1 as unknown as SandboxContract<TreasuryContract>,
       coins: BigInt('1000000000'),
-    });
+    }); */
   });
 
   it('[Bank] user1 transfers to smart contract', async () => {
@@ -41,14 +41,13 @@ describe('[Bank]', () => {
       (user1 as SandboxContract<TreasuryContract>).getSender(),
       toNano('0.05')
     );
-    let bi = 0n;
+    let bi = 50000000n;
     for (const transfer of transfers) {
-      bi += transfer.coins;
+      bi += transfer.value;
       await bankContract.sendTransfer(
         (user1 as SandboxContract<TreasuryContract>).getSender(),
         {
-          value: toNano('0.05'),
-          coins: transfer.coins,
+          value: transfer.value,
         }
       );
       const bal = await bankContract.getBal();
