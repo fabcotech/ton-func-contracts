@@ -30,10 +30,10 @@ describe('[Bank]', () => {
       smart contract balance goes
       above the 1B limit
     */
-    /* transfers.push({
+    transfers.push({
       sender: user1 as unknown as SandboxContract<TreasuryContract>,
-      coins: BigInt('1000000000'),
-    }); */
+      value: BigInt('1000000000'),
+    });
   });
 
   it('[Bank] user1 transfers to smart contract', async () => {
@@ -42,7 +42,9 @@ describe('[Bank]', () => {
       toNano('0.05')
     );
     let bi = 50000000n;
+    let i = 0;
     for (const transfer of transfers) {
+      i += 1;
       bi += transfer.value;
       await bankContract.sendTransfer(
         (user1 as SandboxContract<TreasuryContract>).getSender(),
@@ -51,7 +53,11 @@ describe('[Bank]', () => {
         }
       );
       const bal = await bankContract.getBal();
-      expect(bal).toBe(bi);
+      if (i === transfers.length) {
+        expect(bal).toBe(bi - 1000000000n);
+      } else {
+        expect(bal).toBe(bi);
+      }
     }
   });
 });

