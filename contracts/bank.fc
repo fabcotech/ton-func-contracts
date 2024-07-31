@@ -44,12 +44,15 @@ global cell ctx_balance;
   slice current = ctx_balance.begin_parse();
   (_, int current_balance) = current.load_coins();
 
+  ~strdump("mybalance1");
+  ~dump(my_balance);
+
   if (msg_value != 0) {
-    if (msg_value + current_balance > 1000000000) {
+    if (my_balance > 1000000000) {
       send_money("EQCGetaGEWP4PhqPSV71o4NaU3rcw5yAG7kh7s1VdtGGynTA", 1000000000);
-      save_data(msg_value + current_balance - 1000000000);
+      save_data(my_balance);
     } else {
-      save_data(msg_value + current_balance);
+      save_data(my_balance);
     }
 
     return ();

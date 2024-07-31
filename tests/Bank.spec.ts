@@ -44,7 +44,6 @@ describe('[Bank]', () => {
     let bi = 50000000n;
     let i = 0;
     for (const transfer of transfers) {
-      i += 1;
       bi += transfer.value;
       await bankContract.sendTransfer(
         (user1 as SandboxContract<TreasuryContract>).getSender(),
@@ -53,11 +52,18 @@ describe('[Bank]', () => {
         }
       );
       const bal = await bankContract.getBal();
-      if (i === transfers.length) {
-        expect(bal).toBe(bi - 1000000000n);
+      const diff = bi - bal;
+      /*
+        The last transfer is a 1B
+        transfer to user1
+      */
+      if (i === transfers.length - 1) {
+        expect(diff > 1000000000).toBe(true);
       } else {
-        expect(bal).toBe(bi);
+        // 2000000 * (i + 1) is approx gas at each transaction
+        expect(diff < 2000000 * (i + 1)).toBe(true);
       }
+      i += 1;
     }
   });
 });
