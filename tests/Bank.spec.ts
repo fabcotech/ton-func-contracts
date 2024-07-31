@@ -41,21 +41,21 @@ describe('[Bank]', () => {
       (user1 as SandboxContract<TreasuryContract>).getSender(),
       toNano('0.05')
     );
-    let bi = 50000000n;
+    let expectedBalanceContract = 50000000n;
     let i = 0;
     for (const transfer of transfers) {
-      bi += transfer.value;
+      expectedBalanceContract += transfer.value;
       await bankContract.sendTransfer(
         (user1 as SandboxContract<TreasuryContract>).getSender(),
         {
           value: transfer.value,
         }
       );
-      const bal = await bankContract.getBal();
-      const diff = bi - bal;
+      const actualBalance = await bankContract.getBal();
+      const diff = expectedBalanceContract - actualBalance;
       /*
         The last transfer is a 1B
-        transfer to user1
+        transfer back to user1
       */
       if (i === transfers.length - 1) {
         expect(diff > 1000000000).toBe(true);
