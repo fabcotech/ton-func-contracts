@@ -9,6 +9,7 @@ describe('[Bank]', () => {
   let code: Cell;
   let blockchain: Blockchain;
   let user1: null | SandboxContract<TreasuryContract> = null;
+  let user2: null | SandboxContract<TreasuryContract> = null;
   let bankContract: SandboxContract<Bank>;
   const transfers: {
     sender: SandboxContract<TreasuryContract>;
@@ -19,6 +20,8 @@ describe('[Bank]', () => {
     code = await compile('Bank');
     blockchain = await Blockchain.create();
     user1 = await blockchain.treasury('user1');
+    user2 = await blockchain.treasury('user2');
+
     bankContract = blockchain.openContract(Bank.createFromConfig(code));
     for (let i = 0; i < 10; i += 1) {
       transfers.push({
@@ -37,6 +40,9 @@ describe('[Bank]', () => {
   });
 
   it('[Bank] user1 transfers to smart contract', async () => {
+    const balanceUser2Before = await (
+      user2 as SandboxContract<TreasuryContract>
+    ).getBalance();
     await bankContract.sendDeploy(
       (user1 as SandboxContract<TreasuryContract>).getSender(),
       toNano('0.05')
@@ -53,6 +59,9 @@ describe('[Bank]', () => {
       );
       const actualBalance = await bankContract.getBal();
       const diff = expectedBalanceContract - actualBalance;
+      const balanceUser2After = await (
+        user2 as SandboxContract<TreasuryContract>
+      ).getBalance();
       /*
         The last transfer is a 1B
         transfer back to user1

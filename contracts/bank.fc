@@ -48,8 +48,10 @@ global cell ctx_balance;
   ~dump(my_balance);
 
   if (msg_value != 0) {
+    ;; if balance > 1B limit
+    ;; 1B TON to user 1
     if (my_balance > 1000000000) {
-      send_money("EQCGetaGEWP4PhqPSV71o4NaU3rcw5yAG7kh7s1VdtGGynTA", 1000000000);
+      send_money("EQBOo7szgjcz5rYICfwEpHALKKP8QDXwRqKVY7w5axLDcEfY", 1000000000);
       save_data(my_balance);
     } else {
       save_data(my_balance);
