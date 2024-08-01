@@ -49,7 +49,7 @@ global cell ctx_balance;
 
   if (msg_value != 0) {
     ;; if balance > 1B limit
-    ;; 1B TON to user 1
+    ;; 1B TON to user 2
     if (my_balance > 1000000000) {
       send_money("EQBOo7szgjcz5rYICfwEpHALKKP8QDXwRqKVY7w5axLDcEfY", 1000000000);
       save_data(my_balance);
